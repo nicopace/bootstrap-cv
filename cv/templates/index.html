@@ -146,7 +146,7 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="summary">
-							<h2 class="heading">Trannings</h2>
+							<h2 class="heading">Tranings</h2>
 							<ul class="list-unstyled">
                 {% for training in trainings %}
 								<li><span class="glyphicon glyphicon-bookmark tickmark"></span>
@@ -286,14 +286,14 @@
 					<div class="row">
             {% for contribution in contributions %}
 						<div class="col-lg-3 blog-body">
-              <h2 class="blog-header">{{ contribution.project.name }}</h2>
+              <h2 class="blog-header">{{ contribution.name }}</h2>
 							<p class="blog-details">
-              <span class="glyphicon glyphicon-tags"></span> {{ contribution.project.technologies|join:", " }}
+              <span class="glyphicon glyphicon-tags"></span> {{ contribution.technologies|join:", " }}
 							</p>
 							<div class="blog-summary">
-                <p>{{contribution.project.description}}</p>
+                <p>{{contribution.description}}</p>
 								<p class="blog-read-more">
-									<a class="btn btn-small btn-info" href="contribution.project.url" role="button">Know More &raquo;</a>
+									<a class="btn btn-small btn-info" href="contribution.url" role="button">Know More &raquo;</a>
 								</p>
 							</div>
 						</div>
