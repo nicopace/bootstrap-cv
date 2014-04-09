@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{surname}} {{name}}</title>
+<title>{{cv.surname}} {{cv.name}}</title>
 
 <link href='http://fonts.googleapis.com/css?family=Gabriela' rel='stylesheet' type='text/css'>
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/main.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.min.css"%}" rel="stylesheet">
+<link href="{% static "css/main.css"%}" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -27,7 +28,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">{{surname}} {{name}}</a>
+				<a class="navbar-brand" href="#">{{cv.surname}} {{cv.name}}</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -58,13 +59,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6">
-          <img src="image_url" alt="{{surname}} {{name}} profile image" class="img-thumbnail my-image">
-          <h1>{{name}} {{surname}}</h1>
-          <p>{{company_role}}<br/> <em>@ Unixono Coop. Ltda.</em></p>
+          <img src="image_url" alt="{{cv.surname}} {{cv.name}} profile image" class="img-thumbnail my-image">
+          <h1>{{cv.name}} {{cv.surname}}</h1>
+          <p>{{cv.company_role}}<br/> <em>@ Unixono Coop. Ltda.</em></p>
 				</div>
 				<div class="col-lg-6">
 					<h2>&nbsp;</h2>
-          <p>{{cool_line}}</p>
+          <p>{{cv.cool_line}}</p>
 				</div>
 			</div>
 		</div>
@@ -113,7 +114,7 @@
 			<div class="container">
 				<div class="summary">
 					<h2 class="heading">Profile</h2>
-          {{profile}}
+          {{cv.profile}}
 				</div>
 			</div>
 		</section>
@@ -122,17 +123,17 @@
 			<div class="container">
 				<div class="summary">
 					<h2 class="heading">Education</h2>
-          <p>{{education_text}}</p>
+          <p>{{cv.education_text}}</p>
 					<ul class="list-unstyled">
-            {% for degree in degrees %}
+            {% for degree in cv.degrees.all %}
 						<li>
 							<h3 class="ed-title">
-                {{degree}} degree <span class="grade" data-toggle="tooltip" title="{{grading}}">
+                {{degree.degree}} degree <span class="grade" data-toggle="tooltip" title="{{grading}}">
 									<div class="progress grade-progress-bar">
 										<div class="progress-bar progress-bar-success"
-                      role="progressbar" aria-valuenow="{{degree.value}}" aria-valuemin="0"
-                      aria-valuemax="100" style="width: {{degree.value}}%">
-                      {{degree.value}}%
+                      role="progressbar" aria-valuenow="{{degree.progress}}" aria-valuemin="0"
+                      aria-valuemax="100" style="width: {{degree.progress}}%">
+                      {{degree.progress}}%
 										</div>
 									</div></span>
 							</h3>
@@ -148,7 +149,7 @@
 						<div class="summary">
 							<h2 class="heading">Tranings</h2>
 							<ul class="list-unstyled">
-                {% for training in trainings %}
+                {% for training in cv.trainings.all %}
 								<li><span class="glyphicon glyphicon-bookmark tickmark"></span>
                   Took training in {{training.skill}}
 									<span class="edu-stars">
@@ -167,7 +168,7 @@
 						<div class="summary">
 							<h2 class="heading">Certificates</h2>
 							<ul class="list-unstyled">
-                {% for certificate in certificates %}
+                {% for certificate in cv.certificates.all %}
 								<li><span class="glyphicon glyphicon-ok tickmark"></span>
                   Certified in {{certificate.skill}}
 									<span class="edu-stars">
@@ -190,7 +191,7 @@
 			<div class="container">
 				<div class="summary">
 					<h2 class="heading">Work</h2>
-          {% for work in works %}
+          {% for work in cv.works.all %}
 					<div class="row">
 						<div class="col-md-3">
 							<div class="work-summary-box">
@@ -212,7 +213,7 @@
 				<div class="summary">
 					<h2 class="heading">Skills</h2>
 					<div class="row">
-            {% for skill in skills %}
+            {% for skill in cv.skills.all %}
 						<div class="col-lg-4">
 							<canvas id="website-circle" class="guage-canvas"></canvas>
               <p class="gauge-value-text">{{ skill.value }}</p>
@@ -226,7 +227,7 @@
 								</div>
 								<!-- Table -->
 								<table class="table table-striped skills-table">
-                  {% for work in skill.works %}
+                  {% for work in skill.works.all %}
 									<tr>
                     <th>{{ work.site_name  }}</th>
                     <td><a href="{{ work.site_url  }}">{{ work.site_url }}</a></td>
@@ -245,7 +246,7 @@
 			<div class="container">
 				<div class="summary">
 					<h2 class="heading">Extra</h2>
-          {{ extra }}
+          {{ cv.extra }}
 				</div>
 			</div>
 		</section>
@@ -254,7 +255,7 @@
 			<div class="container">
 				<div class="summary">
 					<h2 class="heading">Blogs</h2>
-          {% for post in blogposts %}
+          {% for post in cv.blogposts.all %}
 					<div class="col-lg-4 blog-body">
             <h2 class="blog-header">{{ post.title }}</h2>
             <img class="img thumbnail blog-img" src="{{ post.image_url }}"
@@ -284,7 +285,7 @@
           These are some of my contributions to Open Source Projects</p>
 					<p>&nbsp;</p>
 					<div class="row">
-            {% for contribution in contributions %}
+            {% for contribution in cv.contributions.all %}
 						<div class="col-lg-3 blog-body">
               <h2 class="blog-header">{{ contribution.name }}</h2>
 							<p class="blog-details">
@@ -311,10 +312,10 @@
 						<div class="col-lg-6">
 							<address>
 								<h2 class="blog-header">My Self</h2>
-                {{address}}<br>
-                {{city}}, {{state}}, {{country}}, {{postal_code}}<br>
-                <abbr title="Mobile">M:</abbr> {{mobile_phone}}<br>
-                <abbr title="Email">E:</abbr> <a href="mailto:{{ email }}">{{ email }}</a>
+                {{cv.address}}<br>
+                {{cv.city}}, {{cv.state}}, {{cv.country}}, {{cv.postal_code}}<br>
+                <abbr title="Mobile">M:</abbr> {{cv.mobile_phone}}<br>
+                <abbr title="Email">E:</abbr> <a href="mailto:{{ cv.email }}">{{ cv.email }}</a>
 							</address>
 						</div>
 						<div class="col-lg-3">
@@ -359,7 +360,7 @@
 				<div class="summary">
 					<h2 class="heading">Testimonials</h2>
 					<div class="row testimonial-user-row">
-            {% for testimony in testimonials %}
+            {% for testimony in cv.testimonials.all %}
 						<div class="col-lg-3 testimonial-user">
               <img src="{{ testimony.image_url }}" alt="{{ testimony.name }}" class="img-circle user-image">
               <h2>{{ testimony.name }}</h2>
@@ -514,12 +515,12 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.scrollTo.min.js"></script>
-	<script src="js/jquery.localScroll.min.js"></script>
-	<script src="js/scrollspy.js"></script>
-	<script src="js/tooltip.js"></script>
-	<script src="js/gauge.min.js"></script>
-	<script src="js/main.js"></script>
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
+	<script src="{% static "js/jquery.scrollTo.min.js" %}"></script>
+	<script src="{% static "js/jquery.localScroll.min.js" %}"></script>
+	<script src="{% static "js/scrollspy.js" %}"></script>
+	<script src="{% static "js/tooltip.js" %}"></script>
+	<script src="{% static "js/gauge.min.js" %}"></script>
+	<script src="{% static "js/main.js" %}"></script>
 </body>
 </html>
